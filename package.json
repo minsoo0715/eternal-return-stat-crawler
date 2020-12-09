@@ -1,0 +1,30 @@
+{
+  "name": "eternal-return-stat-crawler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "main": "server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minsoo0715/eternal-return-stat-crawler.git"
+  },
+  "author": "whiteB",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/minsoo0715/eternal-return-stat-crawler/issues"
+  },
+  "homepage": "https://github.com/minsoo0715/eternal-return-stat-crawler#readme",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "cheerio": "^1.0.0-rc.3",
+    "form-data": "^3.0.0",
+    "http": "0.0.1-security",
+    "node": "^15.3.0",
+    "express": "~4.17.1",
+    "body-parser": "~1.14.2",
+    "express-session": "~1.13.0"
+  }
+}
