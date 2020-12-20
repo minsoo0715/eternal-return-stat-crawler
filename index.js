@@ -25,8 +25,8 @@ const Service = (name, mode) => {
         
                     list.most_played.push( {
                         name: $(this).find('h1.card_title').text(),
-                        count: $(this).find('p.title').text(),
-                        top3: $(this).find('p.subtitle').text().replace(/\(3위 안에 든 횟수: /, "").replace(/\)/, "")
+                        count: Number($(this).find('p.title').text().replace(/ 회/, "")),
+                        top3: Number($(this).find('p.subtitle').text().replace(/\(3위 안에 든 횟수: /, "").replace(/\)/, ""))
                     })
                     
         
@@ -53,9 +53,9 @@ const Service = (name, mode) => {
                         }
                     
                 })
-                list.winnum = ETCLIST['최종 우승 횟수']
-                list.avgrank = ETCLIST['평균 순위']
-                list.avgkill = ETCLIST['평균 킬']
+                list.winnum = Number(ETCLIST['최종 우승 횟수'])
+                list.avgrank = Number(ETCLIST['평균 순위'])
+                list.avgkill = Number(ETCLIST['평균 킬'])
         
             }catch(e) {
                 console.error(e)
@@ -70,8 +70,8 @@ const Service = (name, mode) => {
                     let temp = text.replace(/: |최다 킬| \(|\)/g, "-").split(/-{1,3}/)
                     list.avgchrank.push({
                         chname: temp[0],
-                        avgrank: temp[1],
-                        maxkill: temp[2]
+                        avgrank: Number(temp[1]),
+                        maxkill: Number(temp[2])
                     });
                     }
                 })
@@ -116,9 +116,9 @@ const Service = (name, mode) => {
         
                 for(let i = 0; i<rawlist.length; i+=3) {
                     let temp = {
-                        level: rawlist[i],
-                        kill: rawlist[i+1],
-                        anikill: rawlist[i+2]
+                        level: Number(rawlist[i]),
+                        kill: Number(rawlist[i+1]),
+                        anikill: Number(rawlist[i+2])
                     }
                     etcList.push(temp);
                 }
@@ -126,11 +126,13 @@ const Service = (name, mode) => {
                 for(let i = 0; i*2+1<rawlist_2.length; i++) {
                     
                     etcList[i]['ch'] = rawlist_2[i*2];
-                    etcList[i]['rank'] = rawlist_2[i*2+1];
+                    etcList[i]['rank'] = Number(rawlist_2[i*2+1]);
                 }
         
         
                list.match=etcList;
+
+               list['id']= name;
             }catch(e) {
                 throw e;
             }
