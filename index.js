@@ -1,7 +1,6 @@
 const cheerio = require('cheerio');
 const getHtml = require('./getHtml')
 
-
 const Service = (name, mode) => {
     return new Promise(resolve => {
         var list = {
@@ -15,10 +14,9 @@ const Service = (name, mode) => {
         
         getHtml("KR", "OPEN", name, mode).then(response => {
             
-            let html = response.data.result.output;
+            const html = response.data.result.output;
             const $ = cheerio.load(html);
         
-            try{
                 const $MostList = $("div.row.container").children("div.columns");    
         
                 $MostList.each(function(i, elem) {
@@ -28,16 +26,8 @@ const Service = (name, mode) => {
                         count: Number($(this).find('p.title').text().replace(/ 회/, "")),
                         top3: Number($(this).find('p.subtitle').text().replace(/\(3위 안에 든 횟수: /, "").replace(/\)/, ""))
                     })
-                    
-        
                 })
-        
-        
-            }catch(e) {
-                console.error(e)
-            }
-        
-            try{
+            
                 const $ETCList_value = $("h4");
         
                 const ETC_name = ["최종 우승 횟수", "평균 순위", "평균 킬"];
@@ -57,11 +47,6 @@ const Service = (name, mode) => {
                 list.avgrank = Number(ETCLIST['평균 순위'])
                 list.avgkill = Number(ETCLIST['평균 킬'])
         
-            }catch(e) {
-                console.error(e)
-            }
-        
-            try{
                 const $chList = $("div.grid").children("div");
                 
                 $chList.each(function(i, elem) {
@@ -75,39 +60,15 @@ const Service = (name, mode) => {
                     });
                     }
                 })
-        
-            }catch(e) {
-                console.error(e);
-            }
-        
-            // try{
-            //     const $matchList = $("div.gamecolumns.container").children("div.gamecard");
-            //     $matchList.each(function(i, elem) {
-            //         console.log($(this).find("b").text().substring(0,24));
-            //     })
-            // }catch(e) {
-            //     console.error(e);
-            // }
-        
-            // try{
-            //     const $etcList = $("div.gamecolumns.container").children("div.gamecard").children("table.tablecontainer.center.border").children("tbody").children("tr").find("td.tdborder");
-            //     $etcList.each(function(i, elem) {
-            //         console.log("||",$(this).find("a").text(), "||");
-            //     })
-        
-        
-            // }catch(e) {
-            //     console.error(e);
-            // }
+
             let rawlist = [];
             let rawlist_2 = [];
             let etcList = [];
         
-            try{
                 const $etcList = $("div.gamecolumns.container").children("div.gamecard").children("table.tablecontainer.center.border").children("tbody").children("tr").children('td[rowspan="6"]')
                 $etcList.each(function(i, elem) {
                     if($(this).children().length == 0) {
-                     rawlist.push($(this).text());
+                    rawlist.push($(this).text());
                     }else{
                         rawlist_2.push($(this).text().replace(/ /gi, ""));
                     }
@@ -128,24 +89,10 @@ const Service = (name, mode) => {
                     etcList[i]['ch'] = rawlist_2[i*2];
                     etcList[i]['rank'] = Number(rawlist_2[i*2+1]);
                 }
-        
-        
-               list.match=etcList;
-
-               list['id']= name;
-            }catch(e) {
-                throw e;
-            }
-        
-            
-        
-            
-
+            list.match=etcList;
+            list['id']= name;
             resolve(list);
-
         })
     })
-
 }
-
 module.exports = Service;

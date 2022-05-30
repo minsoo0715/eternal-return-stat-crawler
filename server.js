@@ -17,11 +17,8 @@ app.use(bodyParser.urlencoded());
 
 app.get('/', async (req,res) => {
 
-    console.log('in', req.query.name, req.query.mode);
-
     try{
         let data = await service(req.query.name, req.query.mode);
-        console.log(data);
         res.send(data).end();
         return;
 
